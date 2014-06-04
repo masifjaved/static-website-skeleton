@@ -1,0 +1,48 @@
+AddDefaultCharset UTF-8
+DefaultType text/html
+
+php_flag magic_quotes_gpc Off
+
+ErrorDocument 404 /index.php?page=page-not-found
+ErrorDocument 403 /index.php?page=forbidden
+
+#php_value arg_separator.output &amp;
+#php_value default_charset "UTF-8"
+
+RewriteEngine On 
+RewriteBase /
+ServerSignature Off
+#Options +FollowSymLinks
+
+# enable expirations
+#ExpiresActive On
+#ExpiresDefault "access plus 1 week"
+#ExpiresByType image/gif "access plus 1 week"
+#ExpiresByType image/png "access plus 1 week"
+#ExpiresByType image/jpeg "access plus 1 week"
+#ExpiresByType image/pjpeg "access plus 1 week"
+#ExpiresByType text/javascript "modification plus 1 week"
+#ExpiresByType application/javascript "modification plus 1 week"
+#ExpiresByType text/css "modification plus 1 week"
+
+# send user to flash download
+
+#redirect certain files
+
+#RewriteRule ^admin_area[/]?$ /admin_area/index.php [L]
+#RewriteRule ^admin_area/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([0-9]+)[/]?$ /admin_area/index.php?page=$1&option=$2&item=$3 [L]
+#RewriteRule ^admin_area/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)[/]?$ /admin_area/index.php?page=$1&option=$2 [L]
+#RewriteRule ^admin_area/([a-zA-Z0-9_-]+)[/]?$ /admin_area/index.php?page=$1 [L]
+
+
+#RewriteRule ^index.html / [R=301,NC,L]
+RewriteRule ^sitemap.xml /misc/sitemap.php [L]
+#RewriteRule ^favicon.ico /misc/favicon.php [L]
+
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)[/]?$ /index.php?page=$1&subpage=$2&item=$3 [L]
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)[/]?$ /index.php?page=$1&subpage=$2 [L]
+RewriteRule ^([a-zA-Z0-9_-]+)[/]?$ /index.php?page=$1 [L]
+RewriteRule ^[/]?$ /index.php?page=home [L]
+
+
+

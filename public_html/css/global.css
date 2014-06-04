@@ -1,0 +1,43 @@
+/* 
+    Document   : global
+    Created on : 20-Nov-2012, 
+    Author     : Asif Javed 
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.clearboth 
+{ 
+    clear:both;
+}
+.orange { color: #FACC0E;}
+.white { color: #FFF;}
+
+h1 {
+    margin-bottom: 0px;
+    text-transform: uppercase;
+}
+a {
+    color:#FACC0E;
+    text-decoration: none;
+}
+a:hover { 
+    text-decoration: underline;
+}
+html,body 
+{
+
+}
+
+
+/*====================== Contact Us ====================*/
+
+#contact_form dt {
+    margin:0 0 3px 0;
+}
+
+#contact_form dd {
+    margin:0 0 10px 0;
+}
+
+
