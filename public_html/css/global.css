@@ -43,3 +43,8 @@ html,body
 #contact_form dd .error{
     color:#F00;
 }
+
+#addressArea #map-canvas {
+	width: 300px;
+	height:400px;
+}
