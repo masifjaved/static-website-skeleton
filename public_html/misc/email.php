@@ -1,4 +1,17 @@
-<?php 
+<?php
+header('Content-Type: application/json');
+//error_reporting(E_ALL);
+//ini_set('display_errors',1);
+function isAjax() {
+		return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+}
+
+if (!isAjax()) 
+{
+	echo json_encode(array("status"=>false, "msg"=>'Sorry, but there has been a security error. Please try again'));
+	exit();
+}
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../core/inc/global.php');
 require_once(CORE .'inc/recaptchalib.php');
 
@@ -8,49 +21,19 @@ $resp = recaptcha_check_answer ($privatekey,
                                 $_POST["recaptcha_challenge_field"],
                                 $_POST["recaptcha_response_field"]);
 	
-	function isAjax() {
-	 return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
-	}
-	function htmlMessage($msg) {
-		if (isAjax()) die($msg);
-		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>E-Mailer</title>
-<style>
-body, html {
-	height:100%;
-	width:100%;
-	margin:0;
-	padding:0;
-	background-color:#282828;
-}
-#response {
-	margin-top:300px;
-	text-align:center;
-	color:#FFF;
-	font-size:24px;	
-}
-</style>
-</head>
-<body>
-';
-		echo $msg;
-		echo '
-</body>
-</html>
-';
-		exit();
-	}
+$fieldsToValidate = array('fname','email');
 
 if (!$resp->is_valid) {
- 	htmlMessage('<div id="response">' . _('Sorry, but there has been a security error. Please try again') . '.</div>');
-	exit();
+
+	echo json_encode(array("status"=>false, "msg"=>'Invalid Captcha'));
 	
 } else {
 	$msg = "";
 	foreach ($_POST as $key => $val) {
+		if (in_array($key, $fieldsToValidate) && empty($val)) {
+			echo json_encode(array("status"=>false, "msg"=>'Invalid Data'));
+			exit();
+		}
 		if (!in_array($key,array('recaptcha_challenge_field','recaptcha_response_field'))) {
 			if (is_array($val)) {
 				foreach ($val as $subval) {
@@ -94,11 +77,12 @@ if (!$resp->is_valid) {
 //		ob_end_clean();
 //	}
 	
-	
 	if (mail($to, $subject, $message, $headers)) {
-		htmlMessage('<div id="response">' . _('Thanks') . ' ' . $fname .  ', ' . _('your information has been received') . '.</div>');
+		echo json_encode(array("status"=>true, "msg"=>'Thanks ' . $fname .  ', ' . 'your information has been recieved'));
 	} else {
-		htmlMessage('<div id="response">' . _('Sorry') . ' ' . $fname .  ', ' . _('an error occurred when receiving your details. Please phone us') . '.</div>');
+		echo json_encode(array("status"=>false, "msg"=>'Sorry ' . $fname .  ', ' . 'an error occurred when receiving your details. Please phone us'));
 	}
+
 }
+ 
 ?>

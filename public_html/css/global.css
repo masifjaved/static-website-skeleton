@@ -40,4 +40,6 @@ html,body
     margin:0 0 10px 0;
 }
 
-
+#contact_form dd .error{
+    color:#F00;
+}

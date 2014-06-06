@@ -26,13 +26,13 @@ if ($page == "contactus")
         </dd>
 
         <dt><label for="fname">First Name</label></dt>
-        <dd><input type="text" name="fname" id="fname" maxlength="50" size="26" placeholder="First Name" class="textfield" /></dd>
+        <dd><input type="text" name="fname" id="fname" maxlength="50" size="26" placeholder="First Name" class="textfield" required /></dd>
 
         <dt><label for="lname">Last Name</label></dt>
         <dd><input type="text" name="lname" id="lname" maxlength="50" size="26" placeholder="Last Name" class="textfield" /></dd>
 
         <dt><label for="email">Email</label></dt>
-        <dd><input type="email" name="email" id="email" maxlength="150" size="26" placeholder="Email Address" class="textfield" /></dd>        
+        <dd><input type="email" name="email" id="email" maxlength="150" size="26" placeholder="Email Address" class="textfield" required /></dd>        
 
         <dt><label for="">Telephone</label></dt>
         <dd><input type="tel" name="telephone" id="telephone" maxlength="20" size="26" placeholder="Telephone Number" class="textfield" /></dd>        
